@@ -12,20 +12,20 @@ class DataManager extends Map {
 		/**
 		 * @type {boolean}
 		 */
-		this.freeze = false;
+		this.freezed = false;
 	};
 	/**
 	 * @return {this}
 	 */
 	freeze() {
-		this.freeze = true;
+		this.freezed = true;
 		return this;
 	};
 	/**
 	 * @return {this}
 	 */
 	unfreeze() {
-		this.freeze = false;
+		this.freezed = false;
 		return this;
 	};
 	/**
@@ -46,7 +46,7 @@ class DataManager extends Map {
 	 * @return {this}
 	 */
 	clear() {
-		if (this.freeze) throw new Error('This manager is freezed.');
+		if (this.freezed) throw new Error('This manager is freezed.');
 		super.clear();
 		return this;
 	};
@@ -54,7 +54,7 @@ class DataManager extends Map {
 	 * @return {boolean}
 	 */
 	delete() {
-		if (this.freeze) throw new Error('This manager is freezed.');
+		if (this.freezed) throw new Error('This manager is freezed.');
 		return super.delete();
 	};
 	/**
@@ -63,9 +63,23 @@ class DataManager extends Map {
 	 * @return {this}
 	 */
 	set(key, val) {
-		if (this.freeze) throw new Error('This manager is freezed.');
+		if (this.freezed) throw new Error('This manager is freezed.');
 		super.set(key, val);
 		return this;
+	};
+	/**
+	 * @param {any[]}
+	 * @return {boolean}
+	 */
+	hasAll(keys) {
+		return keys.every(elm => this.has(elm));
+	};
+	/**
+	 * @param {any[]}
+	 * @return {boolean}
+	 */
+	hasAny(keys) {
+		return keys.some(elm => this.has(elm));
 	};
 	/**
 	 * @param {any}
@@ -75,15 +89,16 @@ class DataManager extends Map {
 		return this.findKey(val => val === val);
 	};
 	/**
-	 * @param {DataManager}
+	 * @param {...DataManager}
 	 * @return {DataManager}
 	 */
-	concat(manager) {
-		const clone = manager.clone();
-		this
-			.clone()
-			.filter((val, key) => !clone.has(key))
-			.forEach((val, key) => clone.set(key, val));
+	concat(...managers) {
+		const clone = this.clone();
+		managers.forEach(elm => {
+			elm.forEach((val, key) => {
+				if (!clone.has(key)) clone.set(key, val);
+			});
+		});
 		return clone;
 	};
 	/**
@@ -92,6 +107,13 @@ class DataManager extends Map {
 	 */
 	difference(manager) {
 		return this.filter(val => !manager.has(val));
+	};
+	/**
+	 * @param {DataManager}
+	 * @return {boolean}
+	 */
+	equals(manager) {
+		return this.every((val, key) => manager.get(key) === val);
 	};
 	/**
 	 * @optional {number}
@@ -122,6 +144,34 @@ class DataManager extends Map {
 		};
 	};
 	/**
+	 * @return {any}
+	 */
+	first() {
+		const [key, val] = this.array()[0];
+		return val;
+	};
+	/**
+	 * @return {any}
+	 */
+	firstKey() {
+		const [key, val] = this.array()[0];
+		return key;
+	};
+	/**
+	 * @return {any}
+	 */
+	last() {
+		const [key, val] = this.array().reverse()[0];
+		return val;
+	};
+	/**
+	 * @return {any}
+	 */
+	lastKey() {
+		const [key, val] = this.array().reverse()[0];
+		return key;
+	};
+	/**
 	 * @param {any} key of copy source
 	 * @optional {...any} key(s) of copy target
 	 * @return {this}
@@ -141,7 +191,7 @@ class DataManager extends Map {
 	 * @return {boolean}
 	 */
 	every(fn, thisArg) {
-		fn = fn.bind(thisArg);
+		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		return this.array().every(elm => fn(elm[1], elm[0], this));
 	};
 	/**
@@ -150,10 +200,15 @@ class DataManager extends Map {
 	 * @return {DataManager}
 	 */
 	filter(fn, thisArg) {
-		fn = fn.bind(thisArg);
-		return new DataManager(
-				this.array().filter(elm => fn(elm[1], elm[0], this))
-			);
+		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+		const clone = this.clone();
+		clone.forEach(elm => {
+			const [key, val] = elm;
+			if (!fn(val, key, this)) {
+				clone.delete(key);
+			};
+		});
+		return clone;
 	};
 	/**
 	 * @param {Function}
@@ -161,7 +216,7 @@ class DataManager extends Map {
 	 * @return {any}
 	 */
 	find(fn, thisArg) {
-		fn = fn.bind(thisArg);
+		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		const [key, val] = this.array().find(elm => fn(elm[1], elm[0], this));
 		return val;
 	};
@@ -171,9 +226,18 @@ class DataManager extends Map {
 	 * @return {any}
 	 */
 	findKey(fn, thisArg) {
-		fn = fn.bind(thisArg);
+		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		const [key, val] = this.array().find(elm => fn(elm[1], elm[0], this));
 		return key;
+	};
+	/**
+	 * @param {Function} returns DataManager
+	 * @optional {any}
+	 * @return {DataManager}
+	 */
+	flatMap(fn, thisArg) {
+		const managers = this.map(fn, thisArg);
+		return new DataManager().concat(...managers);
 	};
 	/**
 	 * @param {Function}
@@ -190,8 +254,39 @@ class DataManager extends Map {
 	 * @return {any[]}
 	 */
 	map(fn, thisArg) {
-		fn = fn.bind(thisArg);
+		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		return this.array().map(elm => fn(elm[1], elm[0], this));
+	};
+	/**
+	 * @param {Function}
+	 * @optional {any}
+	 * @return {DataManager}
+	 */
+	mapValues(fn, thisArg) {
+		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+		const clone = this.clone();
+		clone.forEach((val, key) => clone.set(
+				key,
+				fn(val, key, this)
+			));
+		return clone;
+	};
+	/**
+	 * @param {Function}
+	 * @optional {any}
+	 * @return {DataManager[]}
+	 */
+	partition(fn, thisArg) {
+		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+		const managers = [new DataManager(), new DataManager()];
+		this.forEach((val, key, src) => {
+			if (fn(val, key, src)) {
+				managers[0].set(key, val);
+			} else {
+				managers[1].set(key, val);
+			};
+		});
+		return managers;
 	};
 	/**
 	 * @param {Function}
@@ -224,10 +319,34 @@ class DataManager extends Map {
 	 * @return {boolean}
 	 */
 	some(fn, thisArg) {
-		fn = fn.bind(thisArg);
+		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		return Boolean(
 				this.find(fn)
 			);
+	};
+	/**
+	 * @param {Function}
+	 * @optional {any}
+	 * @return {boolean}
+	 */
+	sweep(fn, thisArg) {
+		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+		let result;
+		this.forEach((val, key) => {
+			if (fn(val, key, this)) {
+				this.delete(key);
+				result ++;
+			};
+		});
+		return result;
+	};
+	/**
+	 * @return {Object}
+	 */
+	toJSON() {
+		let result = {};
+		this.forEach((val, key) => result[key] = val);
+		return result;
 	};
 	/**
 	 * @param {any}
