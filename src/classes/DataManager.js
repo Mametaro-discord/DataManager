@@ -12,20 +12,114 @@ class DataManager extends Map {
 		/**
 		 * @type {boolean}
 		 */
-		this.freezed = false;
+		this.frozen = false;
+		/**
+		 * @type {any[]}
+		 */
+		this.frozenKeys = [];
+		/**
+		 * @type {boolean}
+		 */
+		this.sealed = false;
+		/**
+		 * @type {any[]}
+		 */
+		this.sealedKeys = [];
 	};
 	/**
 	 * @return {this}
 	 */
 	freeze() {
-		this.freezed = true;
+		this.frozen = true;
+		return this;
+	};
+	/**
+	 * @param {any}
+	 * @return {this}
+	 */
+	freezeKey(key) {
+		this.frozenKeys.push(key);
+		return this;
+	};
+	/**
+	 * @param {...any | any[]}
+	 * @return {this}
+	 */
+	freezeKeys(...keys) {
+		if (Array.isArray(keys[0])) keys = keys[0];
+		keys.forEach(this.frozenKeys.push);
 		return this;
 	};
 	/**
 	 * @return {this}
 	 */
 	unfreeze() {
-		this.freezed = false;
+		this.frozen = false;
+		return this;
+	};
+	/**
+	 * @param {any}
+	 * @return {this}
+	 */
+	unfreezeKey(key) {
+		this.frozenKeys = this.frozenKeys.filter(elm => elm !== key);
+		return this;
+	};
+	/**
+	 * @param {...any | any[]}
+	 * @return {this}
+	 */
+	unfreezeKeys(...keys) {
+		if (Array.isArray(keys[0])) keys = keys[0];
+		this.frozenKeys = this.frozenKeys.filter(elm => !keys.includes(elm));
+		return this;
+	};
+	/**
+	 * @return {this}
+	 */
+	seal() {
+		this.sealed = true;
+		return this;
+	};
+	/**
+	 * @param {any}
+	 * @return {this}
+	 */
+	sealKey(key) {
+		this.sealed.push(key);
+		return this;
+	};
+	/**
+	 * @param {...any | any[]}
+	 * @return {this}
+	 */
+	sealKeys(...keys) {
+		if (Array.isArray(keys[0])) keys = keys[0];
+		keys.forEach(this.sealed.push);
+		return this;
+	};
+	/**
+	 * @return {this}
+	 */
+	unseal() {
+		this.sealed = false;
+		return this;
+	};
+	/**
+	 * @param {any}
+	 * @return {this}
+	 */
+	unsealKey(key) {
+		this.sealed = this.sealed.filter(elm => elm !== key);
+		return this;
+	};
+	/**
+	 * @param {...any | any[]}
+	 * @return {this}
+	 */
+	unsealKeys(...keys) {
+		if (Array.isArray(keys[0])) keys = keys[0]
+		this.sealed = this.sealed.filter(elm => !keys.includes(elm));
 		return this;
 	};
 	/**
@@ -46,16 +140,41 @@ class DataManager extends Map {
 	 * @return {this}
 	 */
 	clear() {
-		if (this.freezed) throw new Error('This manager is freezed.');
+		if (this.sealed) throw new Error('This manager is sealed.');
+		if (this.frozen) throw new Error('This manager is frozen.');
 		super.clear();
 		return this;
 	};
 	/**
+	 * @param {any}
 	 * @return {boolean}
 	 */
-	delete() {
-		if (this.freezed) throw new Error('This manager is freezed.');
-		return super.delete();
+	delete(key) {
+		if (this.sealed) throw new Error('This manager is sealed.');
+		if (this.frozen) throw new Error('This manager is frozen.');
+		return super.delete(key);
+	};
+	/**
+	 * @param {any[]}
+	 * @return {boolean}
+	 */
+	deleteAll(keys) {
+		if (this.sealed) throw new Error('This manager is sealed.');
+		if (this.frozen) throw new Error('This manager is frozen.');
+		let result;
+		keys.forEach(elm => {
+			const deleted = this.delete(elm);
+			if (!deleted && typeof result === 'undefined') result = false;
+		});
+		if (typeof result === 'undefined') result = true;
+		return result;
+	};
+	/**
+	 * @param {any[]}
+	 * @return {any[]}
+	 */
+	getAll(keys) {
+		return keys.map(this.get);
 	};
 	/**
 	 * @param {any}
@@ -63,9 +182,16 @@ class DataManager extends Map {
 	 * @return {this}
 	 */
 	set(key, val) {
-		if (this.freezed) throw new Error('This manager is freezed.');
-		super.set(key, val);
-		return this;
+		if (this.frozen) throw new Error('This manager is frozen.');
+		return super.set(key, val);
+	};
+	/**
+	 * @param {Array<[any, any]>}
+	 * @return {this}
+	 */
+	setAll(data) {
+		if (this.frozen) throw new Error('This manager is frozen.');
+		return data.forEach(elm => this.set(elm[0], elm[1]));
 	};
 	/**
 	 * @param {any[]}
@@ -86,7 +212,7 @@ class DataManager extends Map {
 	 * @return {any}
 	 */
 	keyOf(val) {
-		return this.findKey(val => val === val);
+		return this.findKey(v => v === val);
 	};
 	/**
 	 * @param {...DataManager}
@@ -106,7 +232,15 @@ class DataManager extends Map {
 	 * @return {DataManager}
 	 */
 	difference(manager) {
-		return this.filter(val => !manager.has(val));
+		return this.filter((val, key) => !manager.has(key))
+			.concat(manager.filter((val, key) => !this.has(key)));
+	};
+	/**
+	 * @param {DataManager}
+	 * @return {DataManager}
+	 */
+	intersect(manager) {
+		return this.filter((val, key) => manager.has(key));
 	};
 	/**
 	 * @param {DataManager}
@@ -172,12 +306,31 @@ class DataManager extends Map {
 		return key;
 	};
 	/**
+	 * @return {any}
+	 */
+	random() {
+		const array = this.array();
+		const random = Math.floor(Math.random() * array.length);
+		const [key, val] = array[random];
+		return val;
+	}
+	/**
+	 * @return {any}
+	 */
+	randomKey() {
+		const array = this.array();
+		const random = Math.floor(Math.random() * array.length);
+		const [key, val] = array[random];
+		return key
+	};
+	/**
 	 * @param {any} key of copy source
 	 * @optional {...any} key(s) of copy target
 	 * @return {this}
 	 */
 	fill(source, ...target) {
-		if (this.freeze) throw new Error('This manager is freezed.');
+		if (this.sealed) throw new Error('This manager is sealed.');
+		if (this.frozen) throw new Error('This manager is frozen.');
 		const sourceVal = this.get(source);
 		if (!target) {
 			this.keys().forEach(elm => this.set(elm, sourceVal));
@@ -190,9 +343,32 @@ class DataManager extends Map {
 	 * @optional {any}
 	 * @return {boolean}
 	 */
+	deleteBy(fn, thisArg) {
+		if (this.sealed) throw new Error('This manager is sealed.');
+		if (this.frozen) throw new Error('This manager is frozen.');
+		if (typeof thisArg !== 'undefined') fn = fn.bind(this);
+		let result;
+		this.forEach((val, key) => {
+			if (fn(val, key, this)) {
+				const deleted = this.delete(key);
+				if (!deleted && typeof result === 'undefined') result = false;
+			};
+		});
+		if (typeof result === 'undefined') result = true;
+	};
+	/**
+	 * @param {Function}
+	 * @optional {any}
+	 * @return {boolean}
+	 */
 	every(fn, thisArg) {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
-		return this.array().every(elm => fn(elm[1], elm[0], this));
+		let result;
+		this.forEach((val, key) => {
+			if (!fn(val, key, this)) result = false;
+		});
+		if (typeof result === 'undefined') result = true;
+		return result;
 	};
 	/**
 	 * @param {Function}
@@ -217,7 +393,10 @@ class DataManager extends Map {
 	 */
 	find(fn, thisArg) {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
-		const [key, val] = this.array().find(elm => fn(elm[1], elm[0], this));
+		let result;
+		this.forEach((val, key) => {
+			if (fn(val, key, this) && typeof result === 'undefined') result = val; 
+		});
 		return val;
 	};
 	/**
@@ -227,8 +406,11 @@ class DataManager extends Map {
 	 */
 	findKey(fn, thisArg) {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
-		const [key, val] = this.array().find(elm => fn(elm[1], elm[0], this));
-		return key;
+		let result;
+		this.forEach((val, key) => {
+			if (fn(val, key, this) && typeof result === 'undefined') result = key; 
+		});
+		return result;
 	};
 	/**
 	 * @param {Function} returns DataManager
@@ -256,6 +438,8 @@ class DataManager extends Map {
 	map(fn, thisArg) {
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		return this.array().map(elm => fn(elm[1], elm[0], this));
+		let result = [];
+		this.forEach((val, key) => result.push(fn(val, key, this)));
 	};
 	/**
 	 * @param {Function}
@@ -326,10 +510,32 @@ class DataManager extends Map {
 	};
 	/**
 	 * @param {Function}
+	 * @return {this}
+	 */
+	sort(fn = (a, b) => Number(a > b) || Number(a === b) - 1) {
+		const entries = this.array();
+		entries.sort((first, second) => fn(first[1], second[1], first[0], second[0]));
+		this.clear();
+		this.setAll(entries);
+		return this;
+	};
+	/**
+	 * @param {Function}
+	 * @return {DataManager}
+	 */
+	sorted(fn = (a, b) => Number(a > b) || Number(a === b) - 1) {
+		const entries = this.array();
+		entries.sort((first, second) => fn(first[1], second[1], first[0], second[0]));
+		return new DataManager(entries);
+	}
+	/**
+	 * @param {Function}
 	 * @optional {any}
 	 * @return {boolean}
 	 */
 	sweep(fn, thisArg) {
+		if (this.sealed) throw new Error('This manager is sealed.');
+		if (this.frozen) throw new Error('This manager is frozen.');
 		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
 		let result;
 		this.forEach((val, key) => {
@@ -339,6 +545,16 @@ class DataManager extends Map {
 			};
 		});
 		return result;
+	};
+	/**
+	 * @param {Function}
+	 * @optional {any}
+	 * @return {this}
+	 */
+	tap(fn, thisArg) {
+		if (typeof thisArg !== 'undefined') fn = fn.bind(thisArg);
+		fn(this);
+		return this;
 	};
 	/**
 	 * @return {Object}
