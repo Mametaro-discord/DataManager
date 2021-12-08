@@ -2,6 +2,8 @@ private/
 
 test/
 
+src/
+
 package-lock.json
 
-src/
+.gitignore
