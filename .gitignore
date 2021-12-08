@@ -3,3 +3,5 @@ private/
 test/
 
 package-lock.json
+
+dist/*.js
