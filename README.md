@@ -24,7 +24,7 @@ JavaScript標準の[strict(厳格)モード](https://developer.mozilla.org/ja/do
 const Manager = require('manager.nodejs');
 const manager = new Manager();
 ```  
-##### 基本的なデータの操作
+##### [基本的なデータの操作](https://google.com)
 ```js
 manager.set('key', 'value');
 console.log(manager.get('key')); // output 'value'
