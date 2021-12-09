@@ -9,8 +9,8 @@ export class Manager<K = string, V = any> extends Map<K, V> {
 
 	public constructor(data?: Array<[K, V]>);
 
-	private handleError<T>(message: string, type: T): T;
-	private handleSpread(data: Array<any | any[]>): any[];
+	private _handleError<T>(message: string, type: T): T;
+	private _handleSpread(data: Array<any | any[]>): any[];
 
 	public override clear(): this;
 	public override delete(key: K): boolean;
