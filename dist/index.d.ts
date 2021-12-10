@@ -20,7 +20,7 @@ export class Manager<K = string, V = any> extends Map<K, V> {
 	public array(): Array<[K, V]>;
 	public at(index?: number): V
 	public clone(data?: Array<[K, V]>): Manager<K, V>;
-	public concat(...managers: Array<Manager<K, V> | Manager<K, V>[]>): Manager<K, V>;
+	public concat(...managers: Spread<Manager<K, V>>): Manager<K, V>;
 	public deleteAll(...keys: Array<[K, V]>): this;
 	public deleteBy(fn: (val: V, key: K, src: this) => boolean, thisArg?: any): this;
 	public difference(manager: Manager<K, V>): Manager<K, V>;
