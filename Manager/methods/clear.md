@@ -2,9 +2,9 @@
 Map#clearです。  
 要素すべてを消し去ってみせます。  
   
-**Return**: this(Manager)  
+**Return**: Manager<*K*, *V*>(=*this*)
 
-###### 例を見てください
+#### 例を見てください
 ```js  
 manager.set('key', 'value');  
 manager.set('otherKey', 'otherValue');  

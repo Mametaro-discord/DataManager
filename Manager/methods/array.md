@@ -3,7 +3,7 @@ Map#entriesで得られるiterableオブジェクトを配列に変換しただ�
   
 **Return**: *Array*<[*K*, *V*]>
 
-###### 例を見てください
+#### 例を見てください
 ```js  
 manager.set('key', 'value');  
 manager.set('otherKey', 'otherValue');  

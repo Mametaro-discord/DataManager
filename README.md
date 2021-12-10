@@ -34,5 +34,3 @@ console.log(manager.get('key')); // output 'value'
 manager.map((val) => val.id);
 manager.forEach((val, key) => console.log(`${key}: ${val}`));
 ```  
-  
-**より詳しい情報は...[tutorial](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/topics/tutorial.md)**

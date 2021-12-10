@@ -7,7 +7,7 @@ data?|*Array*<[*K*, *V*]>|追加するデータ|none
   
 **Return**: Manager<*K*, *V*>
 
-###### 例を見てください
+#### 例を見てください
 ```js  
 manager.set('key', 'value');  
 const clone1 = manager.clone();  

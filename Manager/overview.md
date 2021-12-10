@@ -30,6 +30,7 @@ strictか否かを示します。(JavaScript標準の[strict(厳格)モード](h
 **type**: *boolean*
 
 ## Methods
+だいたいのメソッドはCollectionや*Array*にあるものです。
 
 #### [Manager#array](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/methods/array.md)
 

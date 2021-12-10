@@ -1,0 +1,7 @@
+# ManagerFn<T>
+Managerのメソッドで使うテスト関数の型です。*T*を返します。  
+filterとかで使います。  
+  
+**Type**: (val: *V*, key: *K*, src: Manager<*K*, *V*>(=*this*)) => T  
+  
+**対象メソッド**: [deleteBy](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/methods/deleteBy.md), [every](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/methods/every.md)、[filter](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/methods/filter.md)、[find](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/methods/find.md)、[findKey](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/methods/findKey.md)、[flatMap](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/methods/flatMap.md)、[map](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/methods/map.md)、[mapValues](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/methods/mapValues.md)、[partition](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/methods/partition.md)、[reduce](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/methods/reduce.md)、[some](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/methods/some.md)、[sweep](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/methods/sweep.md)

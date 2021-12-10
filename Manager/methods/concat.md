@@ -1,6 +1,7 @@
 # Manager#concat
 配列をつなげます。  
 もとのManagerがもってないものを追加する感じです。  
+もとのManagerはいじらずに新しいManagerを返します。  
   
 **param**|**type**|**description**|**default**  
 ---|---|---|---  
@@ -8,7 +9,7 @@ managers|[Spread](https://github.com/Mametaro-discord/DataManager/blob/docs/Mana
   
 **Return**: Manager<*K*, *V*>
 
-###### 例を見てください
+#### 例を見てください
 ```js  
 manager.set('key', 'value');  
 const clone = manager.clone();  
