@@ -231,6 +231,7 @@ class Manager extends Map {
 	 * @return {Array<V | undefined>}
 	 */
 	getAll(...keys) {
+		if (!keys) keys = this.array();
 		keys = this._handleSpread(keys);
 		return keys.map(elm => this.get(elm));
 	};
