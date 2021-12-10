@@ -5,9 +5,9 @@
   
 **param**|**type**|**description**|**default**  
 ---|---|---|---  
-manager|Manager<*K*, *V*>|比較するManager|none  
+manager|Manager\<*K*, *V*\>|比較するManager|none  
   
-**Return**: Manager<*K*, *V*>
+**Return**: Manager\<*K*, *V*\>
 
 #### 例を見てください
 ```js  

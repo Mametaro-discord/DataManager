@@ -2,7 +2,7 @@
 Map#clearです。  
 要素すべてを消し去ってみせます。  
   
-**Return**: Manager<*K*, *V*>(=*this*)
+**Return**: Manager\<*K*, *V*\>(=*this*)
 
 #### 例を見てください
 ```js  

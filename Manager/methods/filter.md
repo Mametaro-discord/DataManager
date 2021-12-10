@@ -3,10 +3,10 @@
   
 **param**|**type**|**description**|**default**  
 ---|---|---|---  
-fn|ManagerFn<boolean>|テスト関数|none  
+fn|ManagerFn\<*boolean*\>|テスト関数|none  
 thisArg?|*any*|テスト関数内で*this*として使う値|none  
   
-**Return**: Manager<*K*, *V*>
+**Return**: Manager\<*K*, *V*\>
 
 #### 例を見てください
 ```js  

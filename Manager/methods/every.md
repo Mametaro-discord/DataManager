@@ -3,7 +3,7 @@
   
 **param**|**type**|**description**|**default**  
 ---|---|---|---  
-fn|(val: *V*, key: *K*, src: Manager<*K*, *V*>(=*this*)) => boolean|テスト関数|none  
+fn|(val: *V*, key: *K*, src: Manager\<*K*, *V*\>(=*this*)) => boolean|テスト関数|none  
 thisArg?|*any*|テスト関数の中で*this*として使う値|none  
   
 **Return**: *boolean*

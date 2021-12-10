@@ -5,9 +5,9 @@
 **param**|**type**|**description**|**default**  
 ---|---|---|---  
 source|*K*|コピーもとの要素です。|none  
-target|[Spread](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/types/Spread.md)<*K*>|コピー先(達)|(全キーの配列)  
+target|[Spread](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/types/Spread.md)\<*K*\>|コピー先(達)|(全キーの配列)  
   
-**Return**: Manager<*K*, *V*>(=*this*)
+**Return**: Manager\<*K*, *V*\>(=*this*)
 
 #### 例を見てください
 ```js  

@@ -1,7 +1,7 @@
 # Manager#array
 Map#entriesで得られるiterableオブジェクトを配列に変換しただけです、おもしろいでしょう？  
   
-**Return**: *Array*<[*K*, *V*]>
+**Return**: *Array*\<[*K*, *V*]\>
 
 #### 例を見てください
 ```js  

@@ -3,7 +3,7 @@
   
 **param**|**type**|**description**|**default**  
 ---|---|---|---  
-manager|Manager<*K*, *V*>|比較するManager|none  
+manager|Manager\<*K*, *V*\>|比較するManager|none  
   
 **Return**: *boolean*
 

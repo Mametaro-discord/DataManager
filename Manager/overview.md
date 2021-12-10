@@ -15,7 +15,7 @@ data?|*Array*<[*K*, *V*]>|初期値のデータ|none
 
 #### Manager#frozenKeys
 凍結されているkeyの配列です。  
-**type**: *Array*<K>
+**type**: *Array*\<*K*\>
 
 #### Manager#sealed
 封鎖されているか否かを示します。  
@@ -23,7 +23,7 @@ data?|*Array*<[*K*, *V*]>|初期値のデータ|none
 
 #### Manager#sealedKeys
 封鎖されているkeyの配列です。  
-**type**: *Array*<*K*>
+**type**: *Array*\<*K*\>
 
 #### Manager#stricted
 strictか否かを示します。(JavaScript標準の[strict(厳格)モード](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Strict_mode)とは異なります)  

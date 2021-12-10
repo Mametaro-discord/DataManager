@@ -3,9 +3,9 @@
   
 **param**|**type**|**description**|**default**  
 ---|---|---|---  
-data?|*Array*<[*K*, *V*]>|追加するデータ|none  
+data?|*Array*\<[*K*, *V*]\>|追加するデータ|none  
   
-**Return**: Manager<*K*, *V*>
+**Return**: Manager\<*K*, *V*\>
 
 #### 例を見てください
 ```js  

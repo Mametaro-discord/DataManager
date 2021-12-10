@@ -5,9 +5,9 @@
   
 **param**|**type**|**description**|**default**  
 ---|---|---|---  
-managers|[Spread](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/types/Spread.md)<Manager<*K*, *V*>>|つなげるやつ|none  
+managers|[Spread](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/types/Spread.md)\<Manager\<*K*, *V*\>\>|つなげるやつ|none  
   
-**Return**: Manager<*K*, *V*>
+**Return**: Manager\<*K*, *V*\>
 
 #### 例を見てください
 ```js  
