@@ -14,7 +14,7 @@ npm i manager.nodejs
 ### strict
 JavaScript標準の[strict(厳格)モード](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Strict_mode)とは別のものです。  
 有効だとManagerが細かいことでエラーを投げてきます。  
-詳しくは[topics-strict](https://github.com/Mammetaro-discord/DataManager/blob/docs/Manager/topics/strict.md)
+詳しくは[topics-strict](https://github.com/Mammetaro-discord/DataManager/blob/docs/Manager/topics/strict.md)をご覧ください。
 
 ### その他たくさん！
 
