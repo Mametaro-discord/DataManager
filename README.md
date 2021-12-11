@@ -9,7 +9,7 @@ npm i manager.nodejs
 
 ## Managerの特徴 
 ### freeze, seal  
-[Object](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object)  の静的メソッドであるfreeze, sealと意味は同じですが、仕様が少し異なります。(詳しくは[Manager#freeze](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/topics/freeze.md), [Manager#seal](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/topics/seal.md)をご覧ください)
+[Object](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object)  の静的メソッドであるfreeze, sealと意味は同じですが、仕様が少し異なります。(詳しくは[topics-freeze](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/topics/freeze.md), [topics-seal](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/topics/seal.md)をご覧ください)
 
 ### strict
 JavaScript標準の[strict(厳格)モード](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Strict_mode)とは別のものです。  
