@@ -392,7 +392,7 @@ class Manager extends Map {
 		if (this.sealed) return this._handleError('This manager is sealed.');
 		if (this.frozen) return this._handleError('This manager is frozen.');
 		const sourceVal = this.get(source);
-		transformed.forEach(elm => {
+		target.forEach(elm => {
 			if (this.sealedKeys.includes(elm)) return this
 				._handleError(`This key: ${elm} is sealed.`);
 			if (this.frozenKeys.includes(elm)) return this
