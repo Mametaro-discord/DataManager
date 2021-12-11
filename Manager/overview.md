@@ -1,6 +1,6 @@
 # Manager
-K: keyの型  
-V: valueの型
+K: キーの型  
+V: 値の型
 
 ## Construtor 
 **param**|**type**|**description**|**default**  
@@ -14,7 +14,7 @@ data?|*Array*<[*K*, *V*]>|初期値のデータ|none
 **type**: *boolean*
 
 #### Manager#frozenKeys
-凍結されているkeyの配列です。  
+凍結されているキーの配列です。  
 **type**: *Array*\<*K*\>
 
 #### Manager#sealed
@@ -22,7 +22,7 @@ data?|*Array*<[*K*, *V*]>|初期値のデータ|none
 **type**: *boolean*
 
 #### Manager#sealedKeys
-封鎖されているkeyの配列です。  
+封鎖されているキーの配列です。  
 **type**: *Array*\<*K*\>
 
 #### Manager#stricted

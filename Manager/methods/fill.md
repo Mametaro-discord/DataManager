@@ -1,4 +1,5 @@
 # Manager#fill
+[*Array*#fill](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/fill)風。  
 指定されたキー(達)を指定した値で染めます。  
 わかりにくいので例を見てください↓↓↓  
   
@@ -11,7 +12,7 @@ target|[Spread](https://github.com/Mametaro-discord/DataManager/blob/docs/Manage
 
 #### 例を見てください
 ```js  
-manager.setAll([  
+const manager = new Manager([  
 		['key', 'value'],  
 		['otherKey', 'otherValue'],  
 		['warosuKey', 'warosuValue'],  
@@ -23,4 +24,6 @@ manager.fill('key', ['otherKey', 'warosuKey', 'powerfulKey']);
 ```js  
 manager.fill('key');  
 ```  
-これでもコピー先にすべての要素が指定されるので同じです。
+これでもコピー先にすべての要素が指定されるので同じです。    
+  
+### [Overview](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/overview.md)

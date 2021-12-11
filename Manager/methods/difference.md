@@ -11,10 +11,10 @@ manager|Manager\<*K*, *V*\>|比較するManager|none
 
 #### 例を見てください
 ```js  
-manager.setAll([  
+const manager = new Manager([  
 		['key', 'value'],  
 		['otherKey', 'otherValue']  
-	]);  
+	]);   
 const otherManager = new Manager([  
 		['key', 'value'],  
 		['warosuKey', 'warosuValue']  
@@ -22,4 +22,6 @@ const otherManager = new Manager([
 manager.difference(otherManager);  
 ```
 このときotherManagerには'otherKey'の要素と'warosuKey'の要素が入る感じです。  
-共通の'key'の要素は入りません。
+共通の'key'の要素は入りません。  
+  
+### [Overview](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/overview.md)

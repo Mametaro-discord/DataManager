@@ -9,7 +9,7 @@ manager|Manager\<*K*, *V*\>|比較するManager|none
 
 #### 例を見てください
 ```js  
-manager.setAll([  
+const manager = new Manager([  
 		['key', 'value'],  
 		['otherKey', 'otherValue']  
 	]);  
@@ -19,4 +19,6 @@ const otherManager = new Manager([
 	]);  
 manager.equals(otherManager);  
 ```  
-このときは*true*が返ります。
+このときは*true*が返ります。  
+  
+### [Overview](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/overview.md)

@@ -1,5 +1,6 @@
 # Manager#concat
-配列をつなげます。  
+[*Array*#concat](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)風。  
+Managerをつなげます。  
 もとのManagerがもってないものを追加する感じです。  
 もとのManagerはいじらずに新しいManagerを返します。  
   
@@ -11,7 +12,9 @@ managers|[Spread](https://github.com/Mametaro-discord/DataManager/blob/docs/Mana
 
 #### 例を見てください
 ```js  
-manager.set('key', 'value');  
+const manager = new Manager([  
+		['key', 'value']  
+	]);  
 const clone = manager.clone();  
 clone.set('key', 'warosuValue');  
 clone.set('otherKey', 'otherValue');  
@@ -25,4 +28,6 @@ manager.concat(clone);
 clone.concat(manager);  
 ```  
 だとcloneのほうが優先されます。  
-そんな感じです。
+そんな感じです。  
+  
+### [Overview](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/overview.md)

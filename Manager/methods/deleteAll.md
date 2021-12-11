@@ -3,7 +3,7 @@
   
 **param**|**type**|**description**|**default**  
 ---|---|---|---  
-keys|[Spread](https://github.com/Mametaro-discord/DataManager/blob/docs/types/Spread.md)\<*K*\>|削除する要素のキー達|none  
+keys|[Spread](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/types/Spread.md)\<*K*\>|削除する要素のキー達|none  
   
 **Return**: Manager\<*K*, *V*\>(=*this*)
 
@@ -14,3 +14,6 @@ manager.deleteAll('key', 'otherKey');
 配列でもいいですよ。  
 ```js  
 manager.deleteAll(['key', 'otherKey']);
+```  
+  
+### [Overview](https://github.com/Mametaro-discord/DataManager/blob/docs/Manager/overview.md)
