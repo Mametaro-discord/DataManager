@@ -34,3 +34,6 @@ console.log(manager.get('key')); // output 'value'
 manager.map((val) => val.id);
 manager.forEach((val, key) => console.log(`${key}: ${val}`));
 ```  
+  
+**より詳しい情報は...[docs](https://github.com/Mametaro-discord/DataManager/tree/docs)**  
+				  **[まめたろうのサーバー(discord)](https://discord.gg/UQSUBHwM7T)**
